@@ -76,18 +76,6 @@ void updateListView(HWND hListView, Hotel& g_hotel) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 // ---------------- Диалог добавления / редактирования комнаты ----------------
 // ---------------- Диалог добавления комнаты ----------------
 INT_PTR CALLBACK AddRoomDlgProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam) {

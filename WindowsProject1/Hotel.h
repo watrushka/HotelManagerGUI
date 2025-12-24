@@ -21,10 +21,10 @@ public:
     const vector<Client>& getClients() const;
     void removeClientByIndex(int idx);
     void updateClient(int idx, const Client& c);
-    void sortClientsBySurname();
-    void sortClientsByCost();
-    bool saveClientsToFile(const wstring& filename) const;
-    bool loadClientsFromFile(const wstring& filename);
+    //void sortClientsBySurname();
+    //void sortClientsByCost();
+    //bool saveClientsToFile(const wstring& filename) const;
+    //bool loadClientsFromFile(const wstring& filename);
     double getRoomPrice(int roomId) const;
     const Room* getRoomById(int id) const;
 	Room* getRoomById(int id);
