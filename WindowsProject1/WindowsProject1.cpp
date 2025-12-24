@@ -77,7 +77,6 @@ void updateListView(HWND hListView, Hotel& g_hotel) {
 
 
 // ---------------- Диалог добавления / редактирования комнаты ----------------
-// ---------------- Диалог добавления комнаты ----------------
 INT_PTR CALLBACK AddRoomDlgProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam) {
     switch (message) {
     case WM_INITDIALOG:
@@ -223,7 +222,6 @@ INT_PTR CALLBACK ClientDlgProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lP
 
             // Создаем или обновляем клиента
             Client c(surname, id, days);
-            // Создаем или обновляем клиента
             if (editIndex >= 0) {
                 // Редактирование клиента
                 int oldRoomId = g_hotel.getClients()[editIndex].getRoomId();
