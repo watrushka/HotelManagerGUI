@@ -5,6 +5,9 @@
 #include "Client.h"
 using namespace std;
 
+class Database; // forward declaration
+
+
 class Hotel {
 private:
     vector<Room> rooms;
@@ -31,6 +34,8 @@ public:
 	bool isRoomExists(int id) const;
 	bool saveToFile(const wstring& filename) const;
 	bool loadFromFile(const wstring& filename);
+    bool loadFromDatabase(Database& db);
+    void saveToDatabase(Database& db);
 	bool removeRoomById(int id);
 	bool isRoomFree(int id) const;
     void sortRoomsByPriceAsc();

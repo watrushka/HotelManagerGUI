@@ -124,18 +124,22 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Client.h" />
+    <ClInclude Include="database.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Hotel.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Room.h" />
+    <ClInclude Include="sqlite3.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="utils.h" />
     <ClInclude Include="WindowsProject1.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp" />
+    <ClCompile Include="database.cpp" />
     <ClCompile Include="Hotel.cpp" />
     <ClCompile Include="Room.cpp" />
+    <ClCompile Include="sqlite3.c" />
     <ClCompile Include="utils.cpp" />
     <ClCompile Include="WindowsProject1.cpp" />
   </ItemGroup>

@@ -6,13 +6,16 @@
 #include "Room.h"
 #include <fstream>
 #include "resource.h"
-#include "utils.h"  // <-- обязательно
+#include "utils.h"
+#include "sqlite3.h"
+#include  "Database.h"
+
 
 #pragma comment(lib, "comctl32.lib")
-
 Hotel g_hotel;
 HWND hListView;
 HINSTANCE g_hInst;
+Database db;
 static bool sortPriceAsc = true;
 static bool sortTypeAsc = true;
 static bool sortIdAsc = true;
@@ -423,33 +426,17 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
             }
         } break;
 
-        case 5: { // Сохранить
-            OPENFILENAME ofn = {};
-            wchar_t filename[MAX_PATH] = L"";
-            ofn.lStructSize = sizeof(ofn);
-            ofn.lpstrFilter = L"Text Files\0*.txt\0";
-            ofn.lpstrFile = filename;
-            ofn.nMaxFile = MAX_PATH;
-            ofn.Flags = OFN_OVERWRITEPROMPT;
+        case 5: // Сохранить в БД
+            g_hotel.saveToDatabase(db);
+            MessageBox(hWnd, L"Данные сохранены в базе!", L"Успех", MB_OK | MB_ICONINFORMATION);
+            break;
 
-            if (GetSaveFileName(&ofn))
-                g_hotel.saveToFile(filename);
-        } break;
+        case 6: // Загрузить из БД
+            g_hotel.loadFromDatabase(db);
+            updateListView(hListView, g_hotel);
+            MessageBox(hWnd, L"Данные загружены из базы!", L"Успех", MB_OK | MB_ICONINFORMATION);
+            break;
 
-        case 6: { // Загрузить
-            OPENFILENAME ofn = {};
-            wchar_t filename[MAX_PATH] = L"";
-            ofn.lStructSize = sizeof(ofn);
-            ofn.lpstrFilter = L"Text Files\0*.txt\0";
-            ofn.lpstrFile = filename;
-            ofn.nMaxFile = MAX_PATH;
-            ofn.Flags = OFN_FILEMUSTEXIST;
-
-            if (GetOpenFileName(&ofn)) {
-                g_hotel.loadFromFile(filename);
-                updateListView(hListView, g_hotel);
-            }
-        } break;
 
 
 
@@ -506,6 +493,12 @@ int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE, LPWSTR, int nCmdShow) {
     g_hInst = hInstance;
     INITCOMMONCONTROLSEX icex = { sizeof(icex), ICC_LISTVIEW_CLASSES };
     InitCommonControlsEx(&icex);
+
+    if (!db.open(L"hotel.db")) {
+        MessageBox(nullptr, L"Не удалось открыть базу данных!", L"Ошибка", MB_OK | MB_ICONERROR);
+        return 0;
+    }
+    db.init(); // создаст таблицы, если их нет
 
     WNDCLASS wc = {};
     wc.lpfnWndProc = WndProc;

@@ -7,6 +7,7 @@
 #include <sstream>      // для std::wstringstream
 #include <locale>
 #include <codecvt>
+#include "database.h"
 
 using namespace std;
 
@@ -210,6 +211,26 @@ bool Hotel::loadFromFile(const std::wstring& filename) {
 
     return true;
 }
+
+bool Hotel::loadFromDatabase(Database& db) {
+    rooms = db.loadRooms();
+    clients = db.loadClients();
+    return true;
+}
+
+void Hotel::saveToDatabase(Database& db) {
+    // Полностью очищаем таблицы
+    db.exec("DELETE FROM clients;");
+    db.exec("DELETE FROM rooms;");
+
+    // Вставляем заново все комнаты и клиентов
+    for (const auto& r : rooms)
+        db.insertRoom(r);
+    for (const auto& c : clients)
+        db.insertClient(c);
+}
+
+
 
 
 
